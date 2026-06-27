@@ -1512,7 +1512,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div>© 2025 YAMUNA Oncology Consulting. All rights reserved.</div>
+    <div>© <span id="year"></span> YAMUNA Oncology Consulting. All rights reserved.</div>
     <div>Built with <span>♥</span> for oncology innovation</div>
   </div>
 </footer>
@@ -1638,6 +1638,9 @@
     });
   }, { threshold: .3 });
   document.querySelectorAll('.stat-item').forEach(el => statsObserver.observe(el));
+
+  // Auto-update copyright year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
 </script>
 </body>
