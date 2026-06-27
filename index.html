@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YAMUNA Oncology Consulting | Precision Statistics for Life-Saving Trials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #2e6fbe;
+      --dark:    #0d2045;
+      --mid:     #102450;
+      --teal:    #00e5c9;
+      --teal2:   #00fff0;
+      --gold:    #f5a623;
+      --violet:  #c4b5fd;
+      --violet2: #ddd6fe;
+      --pink:    #f9a8d4;
+      --white:   #ffffff;
+      --gray:    #ffffff;
+      --light:   #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── CANVAS BACKGROUND ─── */
+    #bg-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(15,35,75,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,201,177,0.15);
+      transition: all .3s;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .logo-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(145deg, #071828, #0c1e38);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 24px rgba(0,201,177,.35), inset 0 1px 0 rgba(255,255,255,.06);
+      border: 1.5px solid rgba(0,201,177,.25);
+      position: relative;
+      overflow: hidden;
+      padding: 4px;
+    }
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 25%, rgba(0,201,177,.1) 0%, transparent 65%);
+    }
+    .logo-y { display:none; }
+    .logo-img {
+      width: 58px; height: 58px;
+      object-fit: contain;
+      position: relative; z-index: 1;
+      filter: drop-shadow(0 0 6px rgba(0,201,177,0.5)) brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(140deg);
+    }
+    .logo-text { line-height: 1.25; }
+    .logo-text .brand {
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      background: linear-gradient(90deg, var(--teal), var(--teal2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1.1;
+    }
+    .logo-text .sub {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #f97316;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-style: normal;
+      display: block;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a {
+      text-decoration: none;
+      color: var(--light);
+      font-size: .88rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--teal); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      color: #fff !important;
+      padding: .55rem 1.3rem;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: opacity .2s, transform .2s !important;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 5rem;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(0,201,177,.12);
+      border: 1px solid rgba(0,201,177,.35);
+      color: var(--teal);
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { font-size: .7rem; }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 1.12;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+    h1 .accent {
+      background: linear-gradient(135deg, var(--teal), var(--violet2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      color: var(--gray);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      color: #fff;
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .3s;
+      box-shadow: 0 8px 32px rgba(0,201,177,.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,201,177,.4);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1.5px solid rgba(0,201,177,.5);
+      color: var(--teal);
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .3s;
+    }
+    .btn-outline:hover {
+      background: rgba(0,201,177,.1);
+      transform: translateY(-3px);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 2rem;
+      overflow: visible;
+    }
+    .hero-card-main {
+      background: linear-gradient(145deg, rgba(5,15,40,.96), rgba(4,12,35,.98));
+      border: 1px solid rgba(0,201,177,.2);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 40px 80px rgba(0,0,0,.5);
+      position: relative;
+      z-index: 2;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .card-icon.teal { background: linear-gradient(135deg, rgba(0,201,177,.2), rgba(0,201,177,.05)); border: 1px solid rgba(0,201,177,.3); }
+    .card-title { font-weight: 700; font-size: .95rem; }
+    .card-sub   { color: var(--gray); font-size: .78rem; margin-top: .1rem; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .stat-box {
+      background: rgba(255,255,255,.04);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .stat-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--teal), var(--violet2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: .25rem;
+    }
+    .stat-label { color: var(--gray); font-size: .72rem; }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .75rem;
+      color: var(--gray);
+      margin-bottom: .4rem;
+    }
+    .progress-bar {
+      height: 6px;
+      background: rgba(255,255,255,.06);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: .9rem;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--teal), var(--violet));
+      transition: width 1.5s ease;
+    }
+
+    .floating-badge {
+      position: absolute;
+      background: linear-gradient(135deg, var(--gold), #f97316);
+      color: #fff;
+      border-radius: 50px;
+      padding: .6rem 1.3rem;
+      font-size: .8rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(245,166,35,.5);
+      animation: float 3s ease-in-out infinite;
+      z-index: 20;
+      white-space: nowrap;
+    }
+    /* b1 sits visibly above-right of the card, well within the viewport */
+    .floating-badge.b1 { top: 1.2rem; right: -1rem; animation-delay: 0s; }
+    /* b2 sits below-left of the card */
+    .floating-badge.b2 { bottom: 1.2rem; left: -1rem; animation-delay: 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ─── STATS BANNER ─── */
+    .stats-banner {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, rgba(0,201,177,.1), rgba(124,58,237,.1));
+      border-top: 1px solid rgba(0,201,177,.15);
+      border-bottom: 1px solid rgba(0,201,177,.15);
+      padding: 3rem 5%;
+    }
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item .num {
+      font-size: 2.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--teal), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .stat-item .label {
+      color: var(--gray);
+      font-size: .85rem;
+      margin-top: .4rem;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 5%;
+    }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      color: var(--teal);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-tag::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    h2 .g {
+      background: linear-gradient(135deg, var(--teal), var(--violet2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-desc {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── SERVICES ─── */
+    #services { background: rgba(0,0,0,.2); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: linear-gradient(145deg, rgba(5,15,40,.93), rgba(4,12,35,.96));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all .35s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 20px 20px 0 0;
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0,201,177,.25);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .s1::before { background: linear-gradient(90deg, var(--teal), var(--violet)); }
+    .s2::before { background: linear-gradient(90deg, var(--violet), var(--pink)); }
+    .s3::before { background: linear-gradient(90deg, var(--gold), #f97316); }
+    .s4::before { background: linear-gradient(90deg, var(--teal2), var(--teal)); }
+    .s5::before { background: linear-gradient(90deg, var(--pink), var(--violet)); }
+    .s6::before { background: linear-gradient(90deg, var(--violet2), var(--teal)); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .i1 { background: linear-gradient(135deg, rgba(0,201,177,.2), rgba(0,201,177,.05)); }
+    .i2 { background: linear-gradient(135deg, rgba(124,58,237,.2), rgba(124,58,237,.05)); }
+    .i3 { background: linear-gradient(135deg, rgba(245,166,35,.2), rgba(245,166,35,.05)); }
+    .i4 { background: linear-gradient(135deg, rgba(0,229,201,.2), rgba(0,229,201,.05)); }
+    .i5 { background: linear-gradient(135deg, rgba(236,72,153,.2), rgba(236,72,153,.05)); }
+    .i6 { background: linear-gradient(135deg, rgba(167,139,250,.2), rgba(167,139,250,.05)); }
+
+    .service-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .6rem;
+    }
+    .service-card p {
+      color: var(--gray);
+      font-size: .87rem;
+      line-height: 1.65;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: 1.2rem;
+    }
+    .tag {
+      background: rgba(0,201,177,.1);
+      border: 1px solid rgba(0,201,177,.2);
+      color: var(--teal);
+      padding: .25rem .7rem;
+      border-radius: 50px;
+      font-size: .7rem;
+      font-weight: 600;
+    }
+
+    /* ─── EXPERTISE ─── */
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .expertise-left h2 { margin-bottom: 1.2rem; }
+    .expertise-left p { color: var(--gray); line-height: 1.75; margin-bottom: 1.5rem; }
+
+    .exp-list { list-style: none; }
+    .exp-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: .9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .exp-list li:last-child { border-bottom: none; }
+    .exp-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+    .exp-list li span { color: var(--light); font-size: .92rem; line-height: 1.5; }
+
+    .expertise-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .exp-card {
+      background: linear-gradient(145deg, rgba(5,15,40,.93), rgba(4,12,35,.96));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all .3s;
+    }
+    .exp-card:hover {
+      border-color: rgba(0,201,177,.25);
+      transform: translateX(8px);
+    }
+    .exp-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .exp-card h4 { font-size: .92rem; font-weight: 700; margin-bottom: .2rem; }
+    .exp-card p  { color: var(--gray); font-size: .78rem; }
+
+    /* ─── WHY US ─── */
+    #why { background: rgba(0,0,0,.2); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .why-card {
+      background: linear-gradient(145deg, rgba(5,15,40,.93), rgba(4,12,35,.96));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all .35s;
+    }
+    .why-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,201,177,.2);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    }
+    .why-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .why-card h3 { font-size: .98rem; font-weight: 700; margin-bottom: .6rem; }
+    .why-card p  { color: var(--gray); font-size: .83rem; line-height: 1.6; }
+
+    /* ─── PROCESS ─── */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), var(--violet));
+      z-index: 0;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0 auto 1rem;
+      box-shadow: 0 8px 24px rgba(0,201,177,.3);
+    }
+    .step h4 { font-size: .88rem; font-weight: 700; margin-bottom: .4rem; }
+    .step p  { color: var(--gray); font-size: .75rem; line-height: 1.5; }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: rgba(0,0,0,.2); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(5,15,40,.93), rgba(4,12,35,.96));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all .35s;
+      position: relative;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0,201,177,.2);
+    }
+    .quote-mark {
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--teal);
+      opacity: .3;
+      font-family: serif;
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+    }
+    .testimonial-text {
+      color: var(--light);
+      font-size: .9rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+    }
+    .author-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .av1 { background: linear-gradient(135deg, var(--teal), var(--violet)); }
+    .av2 { background: linear-gradient(135deg, var(--gold), #f97316); }
+    .av3 { background: linear-gradient(135deg, var(--pink), var(--violet)); }
+    .author-name  { font-weight: 700; font-size: .88rem; }
+    .author-role  { color: var(--gray); font-size: .75rem; }
+    .stars { color: var(--gold); font-size: .8rem; margin-bottom: .6rem; }
+
+    /* ─── CONTACT ─── */
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-left h2 { margin-bottom: 1.2rem; }
+    .contact-left p { color: var(--gray); line-height: 1.75; margin-bottom: 2rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .contact-item:last-child { border-bottom: none; }
+    .ci-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(0,201,177,.1);
+      border: 1px solid rgba(0,201,177,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .ci-label { font-size: .73rem; color: var(--gray); text-transform: uppercase; letter-spacing: .06em; }
+    .ci-val   { font-size: .92rem; font-weight: 600; color: var(--teal); }
+
+    .contact-form {
+      background: linear-gradient(145deg, rgba(15,32,64,.8), rgba(10,22,40,.9));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: .8rem; font-weight: 600; color: var(--light); margin-bottom: .5rem; letter-spacing: .03em; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: .85rem 1.1rem;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: .9rem;
+      transition: all .3s;
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(0,201,177,.5);
+      background: rgba(0,201,177,.06);
+      box-shadow: 0 0 0 3px rgba(0,201,177,.1);
+    }
+    .form-group select option { background: #0f2040; }
+    .form-group textarea { height: 110px; }
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--teal), var(--violet));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .3s;
+      box-shadow: 0 8px 32px rgba(0,201,177,.3);
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,201,177,.45);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(0,0,0,.4);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 3rem 5% 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 1.5rem;
+    }
+    .footer-brand p { color: var(--gray); font-size: .85rem; line-height: 1.7; margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { font-size: .85rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--light); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: .6rem; }
+    .footer-col a { color: var(--gray); text-decoration: none; font-size: .84rem; transition: color .2s; }
+    .footer-col a:hover { color: var(--teal); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--gray);
+      font-size: .78rem;
+    }
+    .footer-bottom span { color: var(--teal); }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.d1 { transition-delay: .1s; }
+    .fade-up.d2 { transition-delay: .2s; }
+    .fade-up.d3 { transition-delay: .3s; }
+    .fade-up.d4 { transition-delay: .4s; }
+    .fade-up.d5 { transition-delay: .5s; }
+    .fade-up.d6 { transition-delay: .6s; }
+
+    /* ─── MOBILE MENU ─── */
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .menu-toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(3, 1fr); }
+      .process-steps::before { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav ul, .nav-cta { display: none; }
+      .menu-toggle { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .expertise-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+    }
+
+    /* ─── GLOW ORBS ─── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,201,177,.08) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 15s ease-in-out infinite;
+    }
+    .orb2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,.08) 0%, transparent 70%);
+      bottom: 20%; left: -150px;
+      animation: orb-drift 20s ease-in-out infinite reverse;
+    }
+    @keyframes orb-drift {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(30px, -30px); }
+      66% { transform: translate(-20px, 20px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Ambient orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- Particle canvas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <div class="logo">
+    <div class="logo-icon">
+      <img src="y_logo.png" alt="YAMUNA Y Logo" class="logo-img" />
+      <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <defs>
+          <linearGradient id="ygrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#00e5c9"/>
+            <stop offset="45%"  stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#f5a623"/>
+          </linearGradient>
+          <filter id="yglow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ① THIN LEFT SWIRL — large closed oval loop, hairline calligraphic strokes -->
+        <!-- Outer swirl loop path -->
+        <path
+          d="M 150,192
+             C 128,174 104,152 80,124
+             C 56,96  46,68  55,46
+             C 64,23  90,10  118,18
+             C 148,26 162,56 150,84
+             C 138,108 112,118 90,128
+             C 67,139 56,155 63,170
+             C 70,183 90,190 116,191"
+          fill="none" stroke="url(#ygrad)" stroke-width="5"
+          stroke-linecap="round" stroke-linejoin="round" filter="url(#yglow)"
+        />
+        <!-- Inner swirl echo — the second curve inside the loop -->
+        <path
+          d="M 116,24 C 140,30 156,58 144,86 C 133,110 108,120 88,130"
+          fill="none" stroke="url(#ygrad)" stroke-width="2.5"
+          stroke-linecap="round" opacity="0.65"
+        />
+
+        <!-- ② THICK RIGHT ARM — the dominant bold diagonal sweep (max contrast) -->
+        <path
+          d="M 262,5
+             C 280,-2 292,20 280,52
+             C 268,80 248,106 226,133
+             C 203,160 178,180 157,194"
+          fill="none" stroke="url(#ygrad)" stroke-width="28"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+        <!-- Inner highlight line on right arm for 3D calligraphic depth -->
+        <path
+          d="M 262,5
+             C 280,-2 292,20 280,52
+             C 268,80 248,106 226,133
+             C 203,160 178,180 157,194"
+          fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="8"
+          stroke-linecap="round"
+        />
+
+        <!-- ③ MEDIUM-THICK STEM — descending from junction, slight left curve -->
+        <path
+          d="M 150,193
+             C 146,218 141,246 137,272
+             C 133,292 130,307 128,317"
+          fill="none" stroke="url(#ygrad)" stroke-width="18"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+
+        <!-- ④ THIN BOTTOM CURL — backward C-shape signature of this calligraphy style -->
+        <path
+          d="M 128,317
+             C 113,332 97,325 101,310
+             C 105,295 122,292 127,305"
+          fill="none" stroke="url(#ygrad)" stroke-width="5"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+        <!-- Filled dot at curl terminus -->
+        <circle cx="99" cy="330" r="7" fill="url(#ygrad)" filter="url(#yglow)"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <div class="brand">YAMUNA</div>
+      <div class="sub">Oncology Consulting</div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Consultation</a></li>
+  </ul>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🔬</span> Oncology Statistical Consulting
+      </div>
+      <h1>
+        Precision Statistics.<br/>
+        <span class="accent">Life-Saving</span><br/>
+        Oncology Trials.
+      </h1>
+      <p class="hero-desc">
+        YAMUNA Oncology Consulting delivers world-class biostatistical expertise for oncology clinical trials — from adaptive trial design through FDA regulatory submissions, with the rigor that drug development demands.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">📋 Start Your Project</a>
+        <a href="#services" class="btn-outline">Explore Services →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="card-header">
+          <div class="card-icon teal">📊</div>
+          <div>
+            <div class="card-title">Phase III Adaptive Trial</div>
+            <div class="card-sub">Oncology — Interim Analysis</div>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-val">98.2%</div>
+            <div class="stat-label">Power achieved</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">0.047</div>
+            <div class="stat-label">p-value (OS)</div>
+          </div>
+        </div>
+        <div>
+          <div class="progress-label"><span>Overall Survival</span><span>83%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:83%"></div></div>
+          <div class="progress-label"><span>Progression-Free Survival</span><span>71%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:71%"></div></div>
+          <div class="progress-label"><span>Objective Response Rate</span><span>91%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:91%"></div></div>
+        </div>
+      </div>
+      <div class="floating-badge b1">✅ FDA Submission Ready</div>
+      <div class="floating-badge b2">🎯 Adaptive Design Approved</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS BANNER ─── -->
+<div class="stats-banner fade-up">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="num">40+</div>
+      <div class="label">Clinical Trials Supported</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">15+</div>
+      <div class="label">FDA Submissions</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">100%</div>
+      <div class="label">Regulatory Compliance</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">12+</div>
+      <div class="label">Therapeutic Areas</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-tag">What We Do</div>
+    <h2>Expert Statistical Services for<br/><span class="g">Oncology Drug Development</span></h2>
+    <p class="section-desc">From early-phase design to regulatory submission, we provide the statistical rigor your trial demands — delivered with speed and precision.</p>
+    <div class="services-grid">
+      <div class="service-card s1 fade-up d1">
+        <div class="service-icon i1">🎯</div>
+        <h3>Adaptive Trial Design</h3>
+        <p>Sophisticated adaptive designs including basket trials, umbrella trials, platform trials, and seamless Phase I/II designs with rigorous Type I error control.</p>
+        <div class="service-tags">
+          <span class="tag">BOIN</span><span class="tag">mTPI-2</span><span class="tag">3+3</span><span class="tag">Bayesian</span>
+        </div>
+      </div>
+      <div class="service-card s2 fade-up d2">
+        <div class="service-icon i2">📄</div>
+        <h3>Statistical Analysis Plans</h3>
+        <p>Comprehensive SAPs developed under the estimand framework, covering primary endpoints, sensitivity analyses, and missing data strategies aligned with ICH E9(R1).</p>
+        <div class="service-tags">
+          <span class="tag">ICH E9(R1)</span><span class="tag">CDISC</span><span class="tag">Estimands</span>
+        </div>
+      </div>
+      <div class="service-card s3 fade-up d3">
+        <div class="service-icon i3">📈</div>
+        <h3>Statistical Analysis & Reporting</h3>
+        <p>Full analysis execution — TLFs, integrated summaries, clinical study reports, and patient-level data packages formatted to ICH and FDA standards.</p>
+        <div class="service-tags">
+          <span class="tag">SAS</span><span class="tag">R</span><span class="tag">TLFs</span><span class="tag">CSR</span>
+        </div>
+      </div>
+      <div class="service-card s4 fade-up d4">
+        <div class="service-icon i4">🏛️</div>
+        <h3>FDA Regulatory Consulting</h3>
+        <p>Strategic statistical support for FDA Type B meetings, IND submissions, NDA/BLA statistical sections, and responses to FDA statistical queries.</p>
+        <div class="service-tags">
+          <span class="tag">IND</span><span class="tag">NDA/BLA</span><span class="tag">FDA Meetings</span>
+        </div>
+      </div>
+      <div class="service-card s5 fade-up d5">
+        <div class="service-icon i5">🛡️</div>
+        <h3>DSMB Statistical Support</h3>
+        <p>Independent unblinded statistical analyses for Data Safety Monitoring Boards, including interim analysis reports, stopping rule monitoring, and benefit-risk assessment.</p>
+        <div class="service-tags">
+          <span class="tag">Interim Analysis</span><span class="tag">O'Brien-Fleming</span><span class="tag">Safety</span>
+        </div>
+      </div>
+      <div class="service-card s6 fade-up d6">
+        <div class="service-icon i6">🧬</div>
+        <h3>Biomarker & Precision Oncology</h3>
+        <p>Statistical frameworks for biomarker-driven trial design, enrichment strategies, companion diagnostic validation, and biomarker subgroup analyses.</p>
+        <div class="service-tags">
+          <span class="tag">Companion Dx</span><span class="tag">Biomarker</span><span class="tag">Enrichment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERTISE ─── -->
+<section id="expertise">
+  <div class="section-inner">
+    <div class="expertise-grid">
+      <div class="expertise-left fade-up">
+        <div class="section-tag">Our Depth</div>
+        <h2>Oncology Statistical<br/><span class="g">Expertise You Can Trust</span></h2>
+        <p>With a foundation in advanced biostatistics and deep immersion in oncology clinical trial methodology, YAMUNA brings the technical depth that high-stakes drug development requires.</p>
+        <ul class="exp-list">
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Survival analysis — OS, PFS, ORR, DOR with competing risks and multi-state models</span>
+          </li>
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Bayesian adaptive designs and simulation-based sample size determination</span>
+          </li>
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Immuno-oncology endpoint complexities — delayed treatment effects, landmark analysis</span>
+          </li>
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Oncology-specific estimand construction per ICH E9(R1)</span>
+          </li>
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Causal inference methods for real-world oncology evidence</span>
+          </li>
+          <li>
+            <div class="exp-check">✓</div>
+            <span>Rare cancer and pediatric oncology small-sample statistical methods</span>
+          </li>
+        </ul>
+      </div>
+      <div class="expertise-visual fade-up d2">
+        <div class="exp-card">
+          <div class="exp-card-icon i1">🔬</div>
+          <div>
+            <h4>Phase I Dose Escalation</h4>
+            <p>BOIN, CRM, mTPI-2 design expertise for optimal MTD identification</p>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-icon i2">📐</div>
+          <div>
+            <h4>Basket & Umbrella Trials</h4>
+            <p>Multi-cohort adaptive designs with hierarchical borrowing strategies</p>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-icon i3">⚡</div>
+          <div>
+            <h4>Immuno-Oncology Statistics</h4>
+            <p>Specialized methods for checkpoint inhibitor and CAR-T trial analysis</p>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-icon i4">🎯</div>
+          <div>
+            <h4>Precision Medicine Trials</h4>
+            <p>Biomarker-stratified and genomically-selected population designs</p>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-icon i5">📊</div>
+          <div>
+            <h4>Real-World Evidence</h4>
+            <p>Causal inference and propensity score methods for oncology RWE studies</p>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-icon i6">🏆</div>
+          <div>
+            <h4>Regulatory Submissions</h4>
+            <p>FDA and EMA statistical package preparation and query response</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY US ─── -->
+<section id="why">
+  <div class="section-inner">
+    <div style="text-align:center; max-width:650px; margin:0 auto 3.5rem;">
+      <div class="section-tag" style="justify-content:center;">Why YAMUNA</div>
+      <h2>The Difference That<br/><span class="g">Matters in Drug Development</span></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card fade-up d1">
+        <span class="why-icon">🎓</span>
+        <h3>PhD-Level Expertise</h3>
+        <p>Every engagement is led by a doctoral-level biostatistician with specialized training in oncology clinical trial methodology.</p>
+      </div>
+      <div class="why-card fade-up d2">
+        <span class="why-icon">⚡</span>
+        <h3>Boutique Speed</h3>
+        <p>No bureaucracy. No handoffs to junior staff. Direct access to senior expertise means faster turnaround on critical deliverables.</p>
+      </div>
+      <div class="why-card fade-up d3">
+        <span class="why-icon">🔒</span>
+        <h3>Regulatory Rigor</h3>
+        <p>Every deliverable is built to withstand FDA statistical review — because your approval is too important for anything less.</p>
+      </div>
+      <div class="why-card fade-up d4">
+        <span class="why-icon">🌐</span>
+        <h3>Oncology-Only Focus</h3>
+        <p>We don't dilute across therapeutic areas. Oncology is all we do — which means deeper expertise and better outcomes for you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="process">
+  <div class="section-inner">
+    <div style="text-align:center; max-width:650px; margin:0 auto 3.5rem;">
+      <div class="section-tag" style="justify-content:center;">How We Work</div>
+      <h2>From Discovery Call to<br/><span class="g">Regulatory Submission</span></h2>
+    </div>
+    <div class="process-steps">
+      <div class="step fade-up d1">
+        <div class="step-num">1</div>
+        <h4>Discovery Call</h4>
+        <p>Free 30-min consultation to understand your trial and statistical needs</p>
+      </div>
+      <div class="step fade-up d2">
+        <div class="step-num">2</div>
+        <h4>Proposal & Scope</h4>
+        <p>Detailed proposal with timeline, deliverables, and fixed-fee pricing</p>
+      </div>
+      <div class="step fade-up d3">
+        <div class="step-num">3</div>
+        <h4>Statistical Design</h4>
+        <p>Rigorous trial design with simulation and regulatory justification</p>
+      </div>
+      <div class="step fade-up d4">
+        <div class="step-num">4</div>
+        <h4>Analysis & Reporting</h4>
+        <p>Validated analysis execution and complete regulatory documentation</p>
+      </div>
+      <div class="step fade-up d5">
+        <div class="step-num">5</div>
+        <h4>Regulatory Support</h4>
+        <p>Ongoing support through FDA review and query responses</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div style="text-align:center; max-width:650px; margin:0 auto 3.5rem;">
+      <div class="section-tag" style="justify-content:center;">Client Voices</div>
+      <h2>Trusted by Oncology<br/><span class="g">Innovators Worldwide</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up d1">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">YAMUNA's adaptive basket trial design was the most sophisticated work we've seen from any consulting firm. Their statistical justification sailed through FDA review without a single query.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av1">SK</div>
+          <div>
+            <div class="author-name">Dr. Sarah Kim</div>
+            <div class="author-role">CMO, Precision Oncology Biotech</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up d2">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">We were a small team with a tight timeline for our Phase II IND. YAMUNA delivered a complete SAP and power analysis in two weeks — boutique speed with big-CRO quality.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av2">MR</div>
+          <div>
+            <div class="author-name">Dr. Marcus Rodriguez</div>
+            <div class="author-role">VP Clinical Development, Biotech Startup</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up d3">
+        <div class="quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Their expertise in immuno-oncology statistics is unmatched. The survival analysis they designed for our checkpoint inhibitor trial accounted for delayed treatment effects that we hadn't even considered.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar av3">JP</div>
+          <div>
+            <div class="author-name">Dr. Jennifer Park</div>
+            <div class="author-role">Clinical Statistics Lead, Pharma Partner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <div class="contact-left fade-up">
+        <div class="section-tag">Get In Touch</div>
+        <h2>Ready to Advance<br/><span class="g">Your Oncology Trial?</span></h2>
+        <p>Whether you're designing a Phase I basket trial or preparing for a pivotal Phase III FDA submission, we're ready to bring the statistical rigor your program deserves. Schedule a free 30-minute discovery call today.</p>
+        <div>
+          <div class="contact-item">
+            <div class="ci-icon">📧</div>
+            <div>
+              <div class="ci-label">Email</div>
+              <div class="ci-val">info@yamunaoncology.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div>
+              <div class="ci-label">Location</div>
+              <div class="ci-val">United States (Remote Worldwide)</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">⏱️</div>
+            <div>
+              <div class="ci-label">Response Time</div>
+              <div class="ci-val">Within 24 hours</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">🗓️</div>
+            <div>
+              <div class="ci-label">Free Discovery Call</div>
+              <div class="ci-val">30 minutes, no obligation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form fade-up d2">
+        <h3 style="margin-bottom:1.5rem; font-size:1.15rem;">Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" placeholder="jane@biotech.com" />
+        </div>
+        <div class="form-group">
+          <label>Organization</label>
+          <input type="text" placeholder="Company / Institution" />
+        </div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Adaptive Trial Design</option>
+            <option>Statistical Analysis Plan</option>
+            <option>Statistical Analysis & Reporting</option>
+            <option>FDA Regulatory Consulting</option>
+            <option>DSMB Statistical Support</option>
+            <option>Biomarker & Precision Oncology</option>
+            <option>Other / General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tell Us About Your Project</label>
+          <textarea placeholder="Brief description of your trial, phase, indication, and what you need help with..."></textarea>
+        </div>
+        <button class="btn-submit">🚀 Send Message & Request a Call</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">
+      <img src="y_logo.png" alt="YAMUNA Y Logo" class="logo-img" />
+      <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <defs>
+          <linearGradient id="ygrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#00e5c9"/>
+            <stop offset="45%"  stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#f5a623"/>
+          </linearGradient>
+          <filter id="yglow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ① THIN LEFT SWIRL — large closed oval loop, hairline calligraphic strokes -->
+        <!-- Outer swirl loop path -->
+        <path
+          d="M 150,192
+             C 128,174 104,152 80,124
+             C 56,96  46,68  55,46
+             C 64,23  90,10  118,18
+             C 148,26 162,56 150,84
+             C 138,108 112,118 90,128
+             C 67,139 56,155 63,170
+             C 70,183 90,190 116,191"
+          fill="none" stroke="url(#ygrad)" stroke-width="5"
+          stroke-linecap="round" stroke-linejoin="round" filter="url(#yglow)"
+        />
+        <!-- Inner swirl echo — the second curve inside the loop -->
+        <path
+          d="M 116,24 C 140,30 156,58 144,86 C 133,110 108,120 88,130"
+          fill="none" stroke="url(#ygrad)" stroke-width="2.5"
+          stroke-linecap="round" opacity="0.65"
+        />
+
+        <!-- ② THICK RIGHT ARM — the dominant bold diagonal sweep (max contrast) -->
+        <path
+          d="M 262,5
+             C 280,-2 292,20 280,52
+             C 268,80 248,106 226,133
+             C 203,160 178,180 157,194"
+          fill="none" stroke="url(#ygrad)" stroke-width="28"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+        <!-- Inner highlight line on right arm for 3D calligraphic depth -->
+        <path
+          d="M 262,5
+             C 280,-2 292,20 280,52
+             C 268,80 248,106 226,133
+             C 203,160 178,180 157,194"
+          fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="8"
+          stroke-linecap="round"
+        />
+
+        <!-- ③ MEDIUM-THICK STEM — descending from junction, slight left curve -->
+        <path
+          d="M 150,193
+             C 146,218 141,246 137,272
+             C 133,292 130,307 128,317"
+          fill="none" stroke="url(#ygrad)" stroke-width="18"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+
+        <!-- ④ THIN BOTTOM CURL — backward C-shape signature of this calligraphy style -->
+        <path
+          d="M 128,317
+             C 113,332 97,325 101,310
+             C 105,295 122,292 127,305"
+          fill="none" stroke="url(#ygrad)" stroke-width="5"
+          stroke-linecap="round" filter="url(#yglow)"
+        />
+        <!-- Filled dot at curl terminus -->
+        <circle cx="99" cy="330" r="7" fill="url(#ygrad)" filter="url(#yglow)"/>
+      </svg>
+    </div>
+        <div class="logo-text">
+          <div class="brand">YAMUNA</div>
+          <div class="sub">Oncology Consulting</div>
+        </div>
+      </div>
+      <p>Precision biostatistical consulting for oncology clinical trials. Rigorous science. Regulatory excellence. Life-changing outcomes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Adaptive Trial Design</a></li>
+        <li><a href="#services">Statistical Analysis Plans</a></li>
+        <li><a href="#services">Statistical Analysis</a></li>
+        <li><a href="#services">FDA Regulatory Support</a></li>
+        <li><a href="#services">DSMB Support</a></li>
+        <li><a href="#services">Biomarker Statistics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Expertise</h4>
+      <ul>
+        <li><a href="#expertise">Phase I Design</a></li>
+        <li><a href="#expertise">Basket Trials</a></li>
+        <li><a href="#expertise">Immuno-Oncology</a></li>
+        <li><a href="#expertise">Precision Medicine</a></li>
+        <li><a href="#expertise">Real-World Evidence</a></li>
+        <li><a href="#expertise">Rare Cancers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#why">Why YAMUNA</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#testimonials">Client Stories</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 YAMUNA Oncology Consulting. All rights reserved.</div>
+    <div>Built with <span>♥</span> for oncology innovation</div>
+  </div>
+</footer>
+
+<script>
+  // ─── PARTICLE CANVAS ───
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.5 + .3;
+      this.vx = (Math.random() - .5) * .3;
+      this.vy = (Math.random() - .5) * .3;
+      const colors = ['rgba(0,201,177,', 'rgba(124,58,237,', 'rgba(245,166,35,'];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.alpha = Math.random() * .4 + .1;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + this.alpha + ')';
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,201,177,${.06 * (1 - d/100)})`;
+          ctx.lineWidth = .5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // ─── SCROLL ANIMATIONS ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: .1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ─── NAVBAR SCROLL ───
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(5,14,31,0.97)'
+      : 'rgba(5,14,31,0.85)';
+  });
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ─── FORM SUBMIT ───
+  document.querySelector('.btn-submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.textContent = '✅ Message Sent! We\'ll be in touch within 24 hours.';
+    this.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    setTimeout(() => {
+      this.textContent = '🚀 Send Message & Request a Call';
+      this.style.background = '';
+    }, 4000);
+  });
+
+  // ─── COUNTER ANIMATION ───
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const duration = 2000;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: .3 });
+  document.querySelectorAll('.stat-item').forEach(el => statsObserver.observe(el));
+
+</script>
+</body>
+</html>
