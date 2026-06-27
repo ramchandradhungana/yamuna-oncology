@@ -1513,7 +1513,7 @@
   </div>
   <div class="footer-bottom">
     <div>© <span id="year"></span> YAMUNA Oncology Consulting. All rights reserved.</div>
-    <div>Built with <span>♥</span> for oncology innovation</div>
+    <div>Built with <span>♥</span> for oncology innovation &nbsp;|&nbsp; <a href="#" onclick="openPrivacy();return false;" style="color:var(--teal);text-decoration:none;">Privacy Policy</a></div>
   </div>
 </footer>
 
@@ -1643,5 +1643,233 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
 </script>
+
+<!-- ─── CHATBOT ─── -->
+<div id="chat-bubble" onclick="toggleChat()" title="Chat with us">
+  <span id="chat-bubble-icon">💬</span>
+</div>
+
+<div id="chat-window">
+  <div id="chat-header">
+    <div style="display:flex;align-items:center;gap:.6rem;">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#00e5c9,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">Y</div>
+      <div>
+        <div style="font-weight:700;font-size:.9rem;">YAMUNA Assistant</div>
+        <div style="font-size:.72rem;opacity:.8;">🟢 Online</div>
+      </div>
+    </div>
+    <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;">✕</button>
+  </div>
+  <div id="chat-messages">
+    <div class="bot-msg">Hi! 👋 I'm the YAMUNA Assistant. How can I help you today?<br><br>
+      <button class="quick-btn" onclick="handleQuick('services')">📋 Our Services</button>
+      <button class="quick-btn" onclick="handleQuick('contact')">📧 Contact Us</button>
+      <button class="quick-btn" onclick="handleQuick('consultation')">📅 Book a Call</button>
+      <button class="quick-btn" onclick="handleQuick('expertise')">🔬 Our Expertise</button>
+    </div>
+  </div>
+  <div id="chat-input-area">
+    <input id="chat-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg()" />
+    <button onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<style>
+  #chat-bubble {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #00e5c9, #7c3aed);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,201,177,.5);
+    transition: transform .2s;
+  }
+  #chat-bubble:hover { transform: scale(1.1); }
+  #chat-window {
+    position: fixed;
+    bottom: 6.5rem; right: 2rem;
+    width: 330px;
+    background: #0d1f3a;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    border: 1px solid rgba(0,201,177,.25);
+    z-index: 9998;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  #chat-window.open { display: flex; }
+  #chat-header {
+    background: linear-gradient(135deg, #00c9b1, #7c3aed);
+    padding: 1rem 1.2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    color: #fff;
+  }
+  #chat-messages {
+    padding: 1rem;
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+  }
+  .bot-msg {
+    background: rgba(0,201,177,.12);
+    border: 1px solid rgba(0,201,177,.2);
+    color: #fff;
+    padding: .75rem 1rem;
+    border-radius: 14px 14px 14px 4px;
+    font-size: .83rem;
+    line-height: 1.5;
+    max-width: 90%;
+  }
+  .user-msg {
+    background: linear-gradient(135deg, #00e5c9, #7c3aed);
+    color: #fff;
+    padding: .75rem 1rem;
+    border-radius: 14px 14px 4px 14px;
+    font-size: .83rem;
+    line-height: 1.5;
+    max-width: 90%;
+    align-self: flex-end;
+  }
+  .quick-btn {
+    display: inline-block;
+    margin: .25rem .2rem 0 0;
+    padding: .3rem .7rem;
+    background: rgba(0,201,177,.15);
+    border: 1px solid rgba(0,201,177,.35);
+    color: #00e5c9;
+    border-radius: 50px;
+    font-size: .72rem;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .quick-btn:hover { background: rgba(0,201,177,.3); }
+  #chat-input-area {
+    display: flex;
+    padding: .75rem;
+    border-top: 1px solid rgba(255,255,255,.07);
+    gap: .5rem;
+  }
+  #chat-input {
+    flex: 1;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50px;
+    padding: .5rem 1rem;
+    color: #fff;
+    font-size: .83rem;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+  }
+  #chat-input-area button {
+    background: linear-gradient(135deg, #00e5c9, #7c3aed);
+    border: none;
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  function toggleChat() {
+    const w = document.getElementById('chat-window');
+    w.classList.toggle('open');
+  }
+
+  const responses = {
+    services: "We offer: <br>📊 Adaptive Trial Design<br>📋 Statistical Analysis Plans<br>📈 Statistical Analysis & Reporting<br>🏛️ FDA Regulatory Consulting<br>🛡️ DSMB Statistical Support<br>🧬 Biomarker & Precision Oncology",
+    contact: "You can reach us at:<br>📧 <a href='mailto:ramchandradhungana@gmail.com' style='color:#00e5c9;'>ramchandradhungana@gmail.com</a><br>📱 <a href='tel:+13366816473' style='color:#00e5c9;'>(336) 681-6473</a>",
+    consultation: "We offer a <strong>FREE 30-minute discovery call</strong>! Just email us at <a href='mailto:ramchandradhungana@gmail.com' style='color:#00e5c9;'>ramchandradhungana@gmail.com</a> or call <a href='tel:+13366816473' style='color:#00e5c9;'>(336) 681-6473</a> to schedule.",
+    expertise: "Our expertise includes:<br>🔬 Phase I Dose Escalation<br>🧪 Basket & Umbrella Trials<br>💊 Immuno-Oncology Statistics<br>🎯 Precision Medicine Trials<br>📊 Real-World Evidence<br>📝 Regulatory Submissions",
+    pricing: "We offer competitive, fixed-fee pricing tailored to your project scope. Contact us for a free quote: <a href='mailto:ramchandradhungana@gmail.com' style='color:#00e5c9;'>ramchandradhungana@gmail.com</a>",
+    hello: "Hello! 👋 How can I help you today?<br><br><button class='quick-btn' onclick='handleQuick("services")'>📋 Our Services</button> <button class='quick-btn' onclick='handleQuick("contact")'>📧 Contact Us</button>",
+  };
+
+  function handleQuick(key) {
+    addMsg(key.charAt(0).toUpperCase() + key.slice(1), 'user');
+    setTimeout(() => addMsg(responses[key] || "I'm not sure about that. Please email us at <a href='mailto:ramchandradhungana@gmail.com' style='color:#00e5c9;'>ramchandradhungana@gmail.com</a>", 'bot'), 400);
+  }
+
+  function sendMsg() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    addMsg(text, 'user');
+    input.value = '';
+    const lower = text.toLowerCase();
+    let reply = "Thanks for your message! For detailed inquiries, please email <a href='mailto:ramchandradhungana@gmail.com' style='color:#00e5c9;'>ramchandradhungana@gmail.com</a> or call <a href='tel:+13366816473' style='color:#00e5c9;'>(336) 681-6473</a>.";
+    if (lower.match(/service|offer|what do|provide/)) reply = responses.services;
+    else if (lower.match(/contact|email|phone|reach|call/)) reply = responses.contact;
+    else if (lower.match(/consult|book|appointment|discovery|free call/)) reply = responses.consultation;
+    else if (lower.match(/expert|speciali|experience|skill/)) reply = responses.expertise;
+    else if (lower.match(/price|cost|fee|charge|how much/)) reply = responses.pricing;
+    else if (lower.match(/hello|hi|hey|good/)) reply = responses.hello;
+    setTimeout(() => addMsg(reply, 'bot'), 400);
+  }
+
+  function addMsg(text, type) {
+    const msgs = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = type === 'bot' ? 'bot-msg' : 'user-msg';
+    div.innerHTML = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+</script>
+
+
+<!-- ─── PRIVACY POLICY MODAL ─── -->
+<div id="privacy-overlay" onclick="closePrivacy()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;"></div>
+<div id="privacy-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0d1f3a;border:1px solid rgba(0,201,177,.3);border-radius:20px;padding:2.5rem;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;z-index:100000;color:#fff;font-family:'Inter',sans-serif;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+    <h2 style="font-size:1.4rem;font-weight:800;color:#00e5c9;">Privacy Policy</h2>
+    <button onclick="closePrivacy()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">✕</button>
+  </div>
+  <p style="color:#ccc;font-size:.82rem;margin-bottom:1rem;">Last updated: June 2026</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">1. Information We Collect</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">When you fill out our contact form, we collect your name, email address, organization, and project description. We do not collect any payment or sensitive personal information.</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">2. How We Use Your Information</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">Information you submit is used solely to respond to your inquiry and provide oncology statistical consulting services. We do not sell, share, or distribute your information to third parties.</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">3. Chatbot</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">Our website includes a built-in chat assistant. Conversations are not stored or shared with any third party. The chatbot is used only to answer general questions about our services.</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">4. Hosting</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">This website is hosted on GitHub Pages. GitHub may collect standard server logs (IP address, browser type). Please refer to <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color:#00e5c9;">GitHub's Privacy Policy</a> for details.</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">5. Cookies</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">We do not use tracking cookies or analytics. No personal data is stored in your browser beyond what is necessary for the website to function.</p>
+
+  <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">6. Contact</h3>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1.5rem;">If you have any questions about this Privacy Policy, contact us at <a href="mailto:ramchandradhungana@gmail.com" style="color:#00e5c9;">ramchandradhungana@gmail.com</a>.</p>
+
+  <button onclick="closePrivacy()" style="background:linear-gradient(135deg,#00e5c9,#7c3aed);border:none;color:#fff;padding:.75rem 2rem;border-radius:50px;font-weight:700;cursor:pointer;font-size:.9rem;">Close</button>
+</div>
+
+<script>
+  function openPrivacy() {
+    document.getElementById('privacy-modal').style.display='block';
+    document.getElementById('privacy-overlay').style.display='block';
+    document.body.style.overflow='hidden';
+  }
+  function closePrivacy() {
+    document.getElementById('privacy-modal').style.display='none';
+    document.getElementById('privacy-overlay').style.display='none';
+    document.body.style.overflow='';
+  }
+</script>
+
 </body>
 </html>
