@@ -60,12 +60,12 @@
     }
     .logo-icon {
       width: 86px; height: 86px;
-      background: linear-gradient(145deg, #2e8de0, #1a6ec9, #2979c9);
+      background: linear-gradient(145deg, #060e1c, #0b1a30);
       border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 28px rgba(46,141,224,.6), 0 0 0 2px rgba(255,255,255,.3), inset 0 1px 0 rgba(255,255,255,.2);
-      border: 2px solid rgba(255,255,255,.4);
+      box-shadow: 0 4px 28px rgba(0,201,177,.5), 0 0 0 2px rgba(0,201,177,.5);
+      border: 2px solid rgba(0,201,177,.6);
       position: relative;
       overflow: hidden;
       padding: 4px;
@@ -81,8 +81,11 @@
       width: 74px; height: 74px;
       object-fit: contain;
       position: relative; z-index: 1;
-      mix-blend-mode: multiply;
-      filter: contrast(3) brightness(0.5) drop-shadow(0 2px 4px rgba(0,0,80,0.5));
+      filter: invert(1) brightness(1.8) contrast(2)
+              drop-shadow(0 0 3px #fff)
+              drop-shadow(0 0 3px #fff)
+              drop-shadow(0 0 3px #fff)
+              drop-shadow(0 0 12px rgba(0,229,201,1));
     }
     .logo-text { line-height: 1.25; }
     .logo-text .brand {
