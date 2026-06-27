@@ -1354,27 +1354,31 @@
       </div>
       <div class="contact-form fade-up d2">
         <h3 style="margin-bottom:1.5rem; font-size:1.15rem;">Send Us a Message</h3>
+        <div data-fs-success style="display:none;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:1.25rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;font-weight:600;font-size:1rem;">✅ Message sent! We'll be in touch within 24 hours.</div>
+        <div data-fs-error style="display:none;background:rgba(239,68,68,.2);border:1px solid #ef4444;color:#fca5a5;padding:1rem 1.5rem;border-radius:12px;margin-bottom:1.5rem;font-size:.9rem;"></div>
+        <form id="contact-form">
         <div class="form-row">
           <div class="form-group">
             <label>First Name *</label>
-            <input type="text" placeholder="Jane" />
+            <input type="text" name="first_name" placeholder="Jane" required data-fs-field />
           </div>
           <div class="form-group">
             <label>Last Name *</label>
-            <input type="text" placeholder="Smith" />
+            <input type="text" name="last_name" placeholder="Smith" required data-fs-field />
           </div>
         </div>
         <div class="form-group">
           <label>Email Address *</label>
-          <input type="email" placeholder="jane@biotech.com" />
+          <input type="email" name="email" placeholder="jane@biotech.com" required data-fs-field />
+          <span data-fs-error="email" style="color:#fca5a5;font-size:.8rem;"></span>
         </div>
         <div class="form-group">
           <label>Organization</label>
-          <input type="text" placeholder="Company / Institution" />
+          <input type="text" name="organization" placeholder="Company / Institution" />
         </div>
         <div class="form-group">
           <label>Service of Interest</label>
-          <select>
+          <select name="service">
             <option value="">Select a service...</option>
             <option>Adaptive Trial Design</option>
             <option>Statistical Analysis Plan</option>
@@ -1387,9 +1391,10 @@
         </div>
         <div class="form-group">
           <label>Tell Us About Your Project</label>
-          <textarea placeholder="Brief description of your trial, phase, indication, and what you need help with..."></textarea>
+          <textarea name="message" placeholder="Brief description of your trial, phase, indication, and what you need help with..." data-fs-field></textarea>
         </div>
-        <button class="btn-submit">🚀 Send Message & Request a Call</button>
+        <button type="submit" class="btn-submit" data-fs-submit-btn>🚀 Send Message & Request a Call</button>
+        </form>
       </div>
     </div>
   </div>
@@ -1614,16 +1619,9 @@
     });
   });
 
-  // ─── FORM SUBMIT ───
-  document.querySelector('.btn-submit').addEventListener('click', function(e) {
-    e.preventDefault();
-    this.textContent = '✅ Message Sent! We\'ll be in touch within 24 hours.';
-    this.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-    setTimeout(() => {
-      this.textContent = '🚀 Send Message & Request a Call';
-      this.style.background = '';
-    }, 4000);
-  });
+  // ─── FORM SUBMIT (Formspree) ───
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'mdarznlz' });
 
   // ─── COUNTER ANIMATION ───
   function animateCounter(el, target, suffix = '') {
@@ -1668,7 +1666,7 @@
   <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">When you fill out our contact form, we collect your name, email address, organization, and project description. We do not collect any payment or sensitive personal information.</p>
 
   <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">2. How We Use Your Information</h3>
-  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">Information you submit is used solely to respond to your inquiry and provide oncology statistical consulting services. We do not sell, share, or distribute your information to third parties.</p>
+  <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">Information you submit is used solely to respond to your inquiry and provide oncology statistical consulting services. We do not sell or distribute your information. Contact form submissions are processed by <a href="https://formspree.io/legal/privacy-policy" target="_blank" style="color:#00e5c9;">Formspree</a>, a third-party form service, which transmits your data securely to our email. Please refer to <a href="https://formspree.io/legal/privacy-policy" target="_blank" style="color:#00e5c9;">Formspree's Privacy Policy</a> for details on how they handle data.</p>
 
   <h3 style="color:#00e5c9;font-size:.95rem;margin-bottom:.5rem;">3. Live Chat &amp; Chatbot</h3>
   <p style="color:#ccc;font-size:.85rem;line-height:1.7;margin-bottom:1rem;">Our website uses Tidio for live chat and automated chatbot support. Tidio may collect and store chat conversations to facilitate support. The chatbot automatically handles inquiries when we are offline, and live agents respond during business hours. Please refer to <a href="https://www.tidio.com/privacy-policy/" target="_blank" style="color:#00e5c9;">Tidio's Privacy Policy</a> for details. Chat is used only to answer questions about our services.</p>
@@ -1698,6 +1696,7 @@
   }
 </script>
 
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 <script src="//code.tidio.co/5je3hrdiojy4vysedkl3hoxfvstdtdo0.js" async></script>
 
 </body>
