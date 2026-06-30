@@ -59,16 +59,16 @@
       display: flex; align-items: center; gap: .75rem;
     }
     .logo-icon {
-      width: 72px; height: 72px;
+      width: 112px; height: 112px;
       background: linear-gradient(145deg, #071828, #0c1e38);
-      border-radius: 14px;
+      border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 4px 24px rgba(0,201,177,.35), inset 0 1px 0 rgba(255,255,255,.06);
-      border: 1.5px solid rgba(0,201,177,.25);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.30), 0 0 18px rgba(255,255,255,.88), 0 0 42px rgba(143,215,198,.52), inset 0 1px 0 rgba(255,255,255,.16);
+      border: 2px solid rgba(255,255,255,.78);
       position: relative;
       overflow: hidden;
-      padding: 4px;
+      padding: 3px;
     }
     .logo-icon::before {
       content: '';
@@ -818,6 +818,7 @@
     @media (max-width: 768px) {
       nav ul, .nav-cta { display: none; }
       .menu-toggle { display: flex; }
+      .logo-icon { width: 92px; height: 92px; }
       .hero-inner { grid-template-columns: 1fr; }
       .hero-visual { display: none; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -833,6 +834,13 @@
     }
 
     /* ─── GLOW ORBS ─── */
+    @media (max-width: 480px) {
+      .logo { gap: .55rem; }
+      .logo-icon { width: 80px; height: 80px; }
+      .logo-text .brand { font-size: 1.85rem; }
+      .logo-text .sub { font-size: 1rem; letter-spacing: .08em; }
+    }
+
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -1215,7 +1223,7 @@
 <nav id="navbar">
   <div class="logo">
     <div class="logo-icon">
-      <img src="wow_sapphire_ocean_emerald_land_revolving.gif" alt="YAMUNA animated globe logo" class="logo-img" />
+      <img src="yamuna-logo.gif" alt="YAMUNA animated globe logo" class="logo-img" />
     </div>
     <div class="logo-text">
       <div class="brand">YAMUNA</div>
@@ -2037,7 +2045,7 @@
     <div class="footer-brand">
       <div class="logo">
         <div class="logo-icon">
-          <img src="wow_sapphire_ocean_emerald_land_revolving.gif" alt="YAMUNA animated globe logo" class="logo-img" />
+          <img src="yamuna-logo.gif" alt="YAMUNA animated globe logo" class="logo-img" />
         </div>
         <div class="logo-text">
           <div class="brand">YAMUNA</div>
