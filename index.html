@@ -807,12 +807,39 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 101;
       background: rgba(5,15,40,0.95);
       border-bottom: 1px solid rgba(0,201,177,0.15);
-      text-align: center; padding: .25rem 0;
+      text-align: center; padding: .42rem 0;
+    }
+    @keyframes neonFlicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        color: #00e5c9;
+        text-shadow: 0 0 4px rgba(0,229,201,.4), 0 0 10px rgba(0,229,201,.25);
+        opacity: 1;
+      }
+      20%, 24% {
+        color: #00e5c9;
+        text-shadow: none;
+        opacity: 0.4;
+      }
+      55% {
+        color: #c864ff;
+        text-shadow: 0 0 4px rgba(200,100,255,.35), 0 0 10px rgba(200,100,255,.2);
+        opacity: 0.6;
+      }
+    }
+    @keyframes flipIn {
+      0%   { transform: perspective(300px) rotateX(-90deg); opacity: 0; }
+      60%  { transform: perspective(300px) rotateX(10deg);  opacity: 1; }
+      100% { transform: perspective(300px) rotateX(0deg);   opacity: 1; }
     }
     #live-clock {
-      font-size: .72rem; font-weight: 600; letter-spacing: .05em;
-      color: var(--teal); font-family: 'Inter', monospace;
+      font-size: .95rem; font-weight: 700; letter-spacing: .1em;
+      font-family: monospace;
+      color: #00e5c9;
+      text-shadow: 0 0 4px rgba(0,229,201,.4), 0 0 10px rgba(0,229,201,.25);
+      animation: neonFlicker 6s infinite;
+      display: inline-block;
     }
+    #live-clock.flip { animation: neonFlicker 6s infinite, flipIn 0.35s ease-out; }
     .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .menu-toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
 
@@ -2146,8 +2173,11 @@
     var s = String(now.getSeconds()).padStart(2,'0');
     var ampm = h >= 12 ? 'PM' : 'AM';
     h = h % 12 || 12;
-    document.getElementById('live-clock').textContent =
-      d + ', ' + mo + ' ' + dt + ', ' + yr + ' · ' + h + ':' + m + ':' + s + ' ' + ampm;
+    var el = document.getElementById('live-clock');
+    el.textContent = d + ', ' + mo + ' ' + dt + ', ' + yr + ' · ' + h + ':' + m + ':' + s + ' ' + ampm;
+    el.classList.remove('flip');
+    void el.offsetWidth;
+    el.classList.add('flip');
   }
   updateClock();
   setInterval(updateClock, 1000);
