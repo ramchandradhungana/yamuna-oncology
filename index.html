@@ -2097,7 +2097,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div>© 2025 YAMUNA Oncology Consulting. All rights reserved.</div>
+    <div>© <span id="copy-yr"></span> YAMUNA Oncology Consulting. All rights reserved.</div>
     <div>Built with <span>♥</span> for oncology innovation</div>
   </div>
   <div style="text-align:center; padding:1rem 0 0.5rem; border-top:1px solid rgba(255,255,255,.1); margin-top:1.2rem;">
@@ -2119,6 +2119,7 @@
 </footer>
 
 <script>
+  document.getElementById("copy-yr").textContent = new Date().getFullYear();
   // ─── PARTICLE CANVAS ───
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
