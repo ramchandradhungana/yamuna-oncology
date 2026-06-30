@@ -44,7 +44,7 @@
     /* ─── NAV ─── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 28px; left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -230,7 +230,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 5rem 2rem;
+      padding: 7rem 2rem 5rem;
       overflow: visible;
     }
     .hero-card-main {
@@ -321,7 +321,7 @@
       white-space: nowrap;
     }
     /* b1 sits visibly above-right of the card, well within the viewport */
-    .floating-badge.b1 { top: 2.2rem; right: 1.5rem; animation-delay: 0s; }
+    .floating-badge.b1 { top: 4rem; right: 1.5rem; animation-delay: 0s; }
     /* b2 sits below-left of the card */
     .floating-badge.b2 { bottom: 1.2rem; left: -1rem; animation-delay: 1.5s; }
 
@@ -803,6 +803,16 @@
     .fade-up.d6 { transition-delay: .6s; }
 
     /* ─── MOBILE MENU ─── */
+    #clock-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 101;
+      background: rgba(5,15,40,0.95);
+      border-bottom: 1px solid rgba(0,201,177,0.15);
+      text-align: center; padding: .25rem 0;
+    }
+    #live-clock {
+      font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+      color: var(--teal); font-family: 'Inter', monospace;
+    }
     .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .menu-toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
 
@@ -1219,6 +1229,7 @@
 <canvas id="bg-canvas"></canvas>
 
 <!-- ─── NAV ─── -->
+<div id="clock-bar"><span id="live-clock"></span></div>
 <nav id="navbar">
   <div class="logo">
     <div class="logo-icon">
@@ -2120,6 +2131,26 @@
 
 <script>
   document.getElementById("copy-yr").textContent = new Date().getFullYear();
+
+  // ─── LIVE CLOCK ───
+  function updateClock() {
+    var now = new Date();
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var d = days[now.getDay()];
+    var mo = months[now.getMonth()];
+    var dt = now.getDate();
+    var yr = now.getFullYear();
+    var h = now.getHours();
+    var m = String(now.getMinutes()).padStart(2,'0');
+    var s = String(now.getSeconds()).padStart(2,'0');
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    document.getElementById('live-clock').textContent =
+      d + ', ' + mo + ' ' + dt + ', ' + yr + ' · ' + h + ':' + m + ':' + s + ' ' + ampm;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
   // ─── PARTICLE CANVAS ───
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
