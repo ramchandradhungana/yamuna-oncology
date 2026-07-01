@@ -129,10 +129,12 @@
 
     .nav-cta {
       background: linear-gradient(135deg, var(--teal), var(--violet));
-      color: #fff !important;
+      color: #041830 !important;
       padding: .55rem 1.3rem;
       border-radius: 50px;
-      font-weight: 600 !important;
+      font-weight: 800 !important;
+      letter-spacing: .03em;
+      text-shadow: none !important;
       transition: opacity .2s, transform .2s !important;
     }
     .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
@@ -201,11 +203,12 @@
       align-items: center;
       gap: .5rem;
       background: linear-gradient(135deg, var(--teal), var(--violet));
-      color: #fff;
+      color: #041830;
       padding: .9rem 2rem;
       border-radius: 50px;
-      font-weight: 700;
+      font-weight: 800;
       font-size: .95rem;
+      letter-spacing: .03em;
       text-decoration: none;
       transition: all .3s;
       box-shadow: 0 8px 32px rgba(0,201,177,.3);
@@ -744,7 +747,7 @@
       width: 100%;
       padding: 1rem;
       background: linear-gradient(135deg, var(--teal), var(--violet));
-      color: #fff;
+      color: #041830;
       border: none;
       border-radius: 50px;
       font-size: 1rem;
@@ -755,8 +758,13 @@
       font-family: 'Inter', sans-serif;
     }
     .btn-submit:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 40px rgba(0,201,177,.45);
+      transform: scale(0.97) translateY(3px);
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.35);
+      filter: brightness(0.88);
+    }
+    .btn-submit:active {
+      transform: scale(0.94) translateY(5px);
+      filter: brightness(0.75);
     }
 
     /* ─── FOOTER ─── */
@@ -865,6 +873,21 @@
     }
     #scroll-top.visible { opacity: 1; pointer-events: auto; }
     #scroll-top:hover { transform: scale(1.1) translateY(-2px); }
+
+    /* ─── EMAIL BUTTON PRESS HOVER ─── */
+    .email-press-btn {
+      display: inline-block;
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease !important;
+    }
+    .email-press-btn:hover {
+      transform: scale(0.93) translateY(3px) !important;
+      filter: brightness(0.80);
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.45) !important;
+    }
+    .email-press-btn:active {
+      transform: scale(0.89) translateY(4px) !important;
+      filter: brightness(0.68);
+    }
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
       .services-grid { grid-template-columns: repeat(2, 1fr); }
@@ -939,7 +962,8 @@
     .calc-subtitle { text-align:center; color:rgba(255,255,255,.4); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2rem; font-style:italic; }
     .calc-tabs-wrap { display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center; margin-bottom:2rem; }
     .calc-tab { padding:.42rem 1rem; border-radius:30px; cursor:pointer; font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.18); color:rgba(255,255,255,.7); transition:all .25s; }
-    .calc-tab:hover { background:rgba(0,212,255,.1); border-color:rgba(0,212,255,.5); color:#00d4ff; }
+    .calc-tab:hover { background:rgba(0,212,255,.1); border-color:rgba(0,212,255,.5); color:#00d4ff; transform:scale(0.94) translateY(3px); box-shadow:inset 0 3px 8px rgba(0,0,0,0.3); }
+    .calc-tab:active { transform:scale(0.91) translateY(5px); }
     .calc-tab.active { background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(184,134,11,.2)); border-color:#00d4ff; color:#00d4ff; box-shadow:0 0 18px rgba(0,212,255,.3); }
     .calc-panel { display:none; animation:cFadeIn .35s ease; }
     .calc-panel.active { display:block; }
@@ -955,9 +979,11 @@
     .calc-field select option { background:#1a1040; color:#fff; }
     .calc-btn-row { display:flex; gap:.9rem; justify-content:center; margin-bottom:1.6rem; flex-wrap:wrap; }
     .calc-btn { background:linear-gradient(135deg,#00d4ff,#0099cc); color:#0F0C29; padding:.72rem 2.2rem; border:none; border-radius:30px; font-size:.9rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:transform .2s,box-shadow .2s; box-shadow:0 5px 22px rgba(0,212,255,.32); }
-    .calc-btn:hover { transform:translateY(-2px); box-shadow:0 9px 30px rgba(0,212,255,.48); }
+    .calc-btn:hover { transform:scale(0.94) translateY(3px); box-shadow:inset 0 4px 12px rgba(0,0,0,0.35); filter:brightness(0.85); }
+    .calc-btn:active { transform:scale(0.91) translateY(5px); filter:brightness(0.72); }
     .calc-reset { background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); padding:.72rem 1.6rem; border:1.5px solid rgba(255,255,255,.2); border-radius:30px; font-size:.86rem; font-weight:600; cursor:pointer; transition:all .2s; }
-    .calc-reset:hover { background:rgba(255,255,255,.14); color:#fff; }
+    .calc-reset:hover { background:rgba(255,255,255,.14); color:#fff; transform:scale(0.94) translateY(3px); box-shadow:inset 0 3px 8px rgba(0,0,0,0.28); }
+    .calc-reset:active { transform:scale(0.91) translateY(5px); }
     .calc-result { background:linear-gradient(135deg,rgba(0,212,255,.07),rgba(184,134,11,.07)); border:1px solid rgba(0,212,255,.28); border-radius:16px; padding:1.7rem; text-align:center; display:none; animation:rPop .45s cubic-bezier(.34,1.56,.64,1); }
     .calc-result.show { display:block; }
     @keyframes rPop { from{opacity:0;transform:scale(.86)} to{opacity:1;transform:scale(1)} }
@@ -1188,7 +1214,8 @@
   color:#100414; background: linear-gradient(135deg,#ff3aa6,#ffd27a 52%,#00ffd1);
   box-shadow: 0 10px 30px rgba(255,58,166,.28); transition: transform .18s, box-shadow .18s, filter .18s;
 }
-.statx-btn:hover { transform: translateY(-2px); box-shadow:0 14px 38px rgba(0,255,209,.26); filter:brightness(1.05); }
+.statx-btn:hover { transform:scale(0.94) translateY(3px); box-shadow:inset 0 4px 12px rgba(0,0,0,0.35); filter:brightness(0.85); }
+.statx-btn:active { transform:scale(0.91) translateY(5px); filter:brightness(0.72); }
 .statx-btn.secondary { color:rgba(255,255,255,.72); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); box-shadow:none; }
 .statx-result {
   display:none; margin-top: 1rem; border-radius: 18px; padding: 1.1rem;
@@ -2019,6 +2046,7 @@
 
 <section id="contact">
   <div class="section-inner">
+    <h2 style="text-align:center; margin-bottom:2.2rem; font-size:clamp(2rem,4vw,3rem); font-weight:800; background:linear-gradient(135deg,#ffffff 0%,#ffd700 60%,#00e5c9 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.35));">Let's Connect</h2>
     <div class="contact-inner">
       <div class="contact-left fade-up">
         <h2>Ready to Advance<br/><span class="g">Your Oncology Trial?</span></h2>
@@ -2048,7 +2076,6 @@
         </div>
       </div>
       <div class="contact-form fade-up d2">
-        <h2 style="margin-bottom:1.2rem; font-size:clamp(1.9rem,3.5vw,2.6rem); line-height:1.2; font-weight:800; background:linear-gradient(135deg,#4fd1c5,#667eea); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Let's Connect</h2>
         <h3 style="margin-bottom:1.5rem; font-size:1.15rem;">Send Us a Message</h3>
         <div class="form-row">
           <div class="form-group">
@@ -2086,24 +2113,25 @@
           <textarea placeholder="Brief description of your trial, phase, indication, and what you need help with..."></textarea>
         </div>
         <button class="btn-submit">🚀 Send Message & Request a Call</button>
-        <div style="margin-top:1.2rem; text-align:center;">
-          <p style="color:rgba(255,255,255,.55); font-size:.85rem; margin-bottom:.75rem;">Or reach us directly:</p>
-          <a href="https://mail.google.com/mail/?view=cm&to=info@yamunaoncology.com" target="_blank"
-             style="display:inline-block; margin:.3rem .4rem; padding:.65rem 1.4rem; border-radius:30px;
-                    background:linear-gradient(135deg,var(--teal),var(--navy)); color:#fff;
-                    font-weight:700; font-size:.85rem; text-decoration:none; letter-spacing:.05em;
-                    border:1.5px solid var(--teal); transition:opacity .2s;">
-            ✉ info@yamunaoncology.com
-          </a>
-          <a href="https://mail.google.com/mail/?view=cm&to=ramchandradhungana@gmail.com" target="_blank"
-             style="display:inline-block; margin:.3rem .4rem; padding:.65rem 1.4rem; border-radius:30px;
-                    background:linear-gradient(135deg,#667eea,#764ba2); color:#fff;
-                    font-weight:700; font-size:.85rem; text-decoration:none; letter-spacing:.05em;
-                    border:1.5px solid #667eea; transition:opacity .2s;">
-            ✉ ramchandradhungana@gmail.com
-          </a>
-        </div>
       </div>
+    </div>
+    <!-- Email buttons OUTSIDE the form card, below the grid -->
+    <div style="text-align:center; margin-top:2rem;">
+      <p style="font-size:.88rem; font-weight:700; letter-spacing:.06em; margin-bottom:.85rem; background:linear-gradient(135deg,#ffffff,#ffd700); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Or reach us directly:</p>
+      <a href="https://mail.google.com/mail/?view=cm&to=info@yamunaoncology.com" target="_blank" class="email-press-btn"
+         style="margin:.3rem .5rem; padding:.7rem 1.6rem; border-radius:30px;
+                background:linear-gradient(135deg,var(--teal),var(--navy)); color:#fff;
+                font-weight:700; font-size:.88rem; text-decoration:none; letter-spacing:.05em;
+                border:1.5px solid var(--teal);">
+        ✉ Business Email
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&to=ramchandradhungana@gmail.com" target="_blank" class="email-press-btn"
+         style="margin:.3rem .5rem; padding:.7rem 1.6rem; border-radius:30px;
+                background:linear-gradient(135deg,#667eea,#764ba2); color:#fff;
+                font-weight:700; font-size:.88rem; text-decoration:none; letter-spacing:.05em;
+                border:1.5px solid #667eea;">
+        ✉ Gmail
+      </a>
     </div>
   </div>
 </section>
@@ -2158,19 +2186,20 @@
     <div>Built with <span>♥</span> for oncology innovation</div>
   </div>
   <div style="text-align:center; padding:1rem 0 0.5rem; border-top:1px solid rgba(255,255,255,.1); margin-top:1.2rem;">
-    <a href="https://mail.google.com/mail/?view=cm&to=info@yamunaoncology.com" target="_blank"
-       style="display:inline-block; margin:.3rem .4rem; padding:.6rem 1.4rem; border-radius:30px;
+    <span style="display:block; font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:.6rem; background:linear-gradient(135deg,#ffffff,#ffd700); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Email:</span>
+    <a href="https://mail.google.com/mail/?view=cm&to=info@yamunaoncology.com" target="_blank" class="email-press-btn"
+       style="margin:.3rem .4rem; padding:.6rem 1.4rem; border-radius:30px;
               background:linear-gradient(135deg,var(--teal),var(--navy)); color:#fff;
               font-weight:700; font-size:.82rem; text-decoration:none; letter-spacing:.05em;
-              border:1.5px solid var(--teal); transition:opacity .2s; opacity:.9;">
-      ✉ info@yamunaoncology.com
+              border:1.5px solid var(--teal); opacity:.9;">
+      ✉ Business Email
     </a>
-    <a href="https://mail.google.com/mail/?view=cm&to=ramchandradhungana@gmail.com" target="_blank"
-       style="display:inline-block; margin:.3rem .4rem; padding:.6rem 1.4rem; border-radius:30px;
+    <a href="https://mail.google.com/mail/?view=cm&to=ramchandradhungana@gmail.com" target="_blank" class="email-press-btn"
+       style="margin:.3rem .4rem; padding:.6rem 1.4rem; border-radius:30px;
               background:linear-gradient(135deg,#667eea,#764ba2); color:#fff;
               font-weight:700; font-size:.82rem; text-decoration:none; letter-spacing:.05em;
-              border:1.5px solid #667eea; transition:opacity .2s; opacity:.9;">
-      ✉ ramchandradhungana@gmail.com
+              border:1.5px solid #667eea; opacity:.9;">
+      ✉ Gmail
     </a>
   </div>
 </footer>
