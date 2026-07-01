@@ -83,16 +83,12 @@
       position: relative; z-index: 1;
       border-radius: 13px;
     }
-    @keyframes floatBob {
-      0%,100% { transform: translateY(0px); }
-      50%     { transform: translateY(-8px); }
-    }
     @keyframes pulseGlow {
       0%,100% { box-shadow: 0 0 0 1px rgba(255,255,255,.30), 0 0 18px rgba(255,255,255,.88), 0 0 42px rgba(143,215,198,.52); }
       50%     { box-shadow: 0 0 0 3px rgba(255,255,255,.90), 0 0 35px rgba(255,255,255,1), 0 0 80px rgba(0,229,201,.85), 0 0 140px rgba(0,229,201,.45); }
     }
     .logo-icon {
-      animation: floatBob 3s ease-in-out infinite, pulseGlow 2s ease-in-out infinite;
+      animation: pulseGlow 2s ease-in-out infinite;
       overflow: hidden;
     }
     .logo { transition: transform .3s ease; }
